@@ -1,16 +1,49 @@
 using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] PlayerInput inputs;
+    [SerializeField] PlayerMovement movement;
+
+
+    private void OnEnable()
     {
-        
+        inputs.Jump.performed += OnJump;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        inputs.Jump.performed -= OnJump;
     }
+
+    public void OnMove(CallbackContext context)
+    {
+        movement.Move(inputs.Move.ReadValue<Vector2>());
+    }
+
+    public void OnJump(CallbackContext context)
+    {
+        movement.Jump();
+       
+    }
+    private void Update()
+    {
+        movement.Move(inputs.Direction);
+        Flip();
+    }
+
+    public void Flip()
+    {
+        if (transform.eulerAngles.y == 0 && inputs.Direction.x < 0)
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+        else if (transform.eulerAngles.y == 180 && inputs.Direction.x > 0)
+        {
+            transform.eulerAngles = Vector3.zero;
+        }
+    }
+
+
 }
