@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class Murcielago : MonoBehaviour
 {
-    [SerializeField] Transform positionPlayer;
+    [SerializeField] public  Transform positionPlayer;
     [SerializeField] float distancePlayer;
     [SerializeField] Vector3 puntoInicial;
     [SerializeField] SpriteRenderer spriteRender;
-    [SerializeField] Animator anim;
+    [SerializeField] public Animator anim;
 
 
     private void Start()
